@@ -2,10 +2,11 @@ import spotipy.util as util
 import pandas as pd
 import requests
 import logging
+import json
 
 
 logger = logging.getLogger(__file__)
-#logging, nacitani z filu, try/except, duplicita kodu, type hints (sipky atd), unit test
+#logging, try/except, duplicita kodu, type hints (sipky atd), unit test
 
 def foo(config_path: str):
     try:
@@ -27,9 +28,12 @@ def generate_token(config_path: str) -> str:
     # How to import variables from json file
     # How to get credentials to spotify - put in readme, remove comments in this fun
     dictionary = {}
-    username = dictionary['username']
-    client_id =':)'
-    client_secret = ':)' #produced on Spotify Developers site
+    config= open("spotify_config.json")
+    config_data = json.load(config)
+    username = config_data["username"]
+    client_id = config_data["client_id"]
+    client_secret = config_data['client_secret'] #produced on Spotify Developers site
+    config.close()
     redirect_uri = 'http://localhost:7777/callback' #the spotify api requires a redirect URI
     scope = 'user-library-read'
     token = util.prompt_for_user_token(
